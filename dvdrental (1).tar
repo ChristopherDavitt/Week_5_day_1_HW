@@ -1,0 +1,148 @@
+-- Hello World SQL Query, SELECT all records FROM actor table
+SELECT *
+FROM actor;
+
+--Query for first_name and last_name in the actor table
+SELECT first_name, last_name
+FROM actor;
+
+-- Query for first_name that equals Nick using WHERE clause
+-- using LIKE and WHERE
+SELECT first_name, last_name
+FROM actor
+WHERE first_name LIKE 'Nick';
+
+-- Query for all first_name data that starts with J 
+-- using LIKE and WHERE and WILDCARD - %
+SELECT first_name, actor_id
+FROM actor
+WHERE first_name LIKE 'J%';
+
+--Query for all first_name data that starts with K and has 2 letters
+-- after it using LIKE, WHERE, and the underscore __
+SELECT first_name, actor_id
+FROM actor
+WHERE first_name LIKE 'K__';
+
+-- Query for all first_name data that starts with 'K' and ends with 'th'
+SELECT first_name, last_name, actor_id
+FROM actor
+WHERE first_name LIKE 'K__%th';
+
+-- Comparing Operators:
+------------------------
+--Greater than (>) Less than (<)
+-- Greater or equal (>=) less or equal (<=)
+--Not equal (<>)
+
+-- Explore the Payment Table
+SELECT *
+FROM payment;
+
+--Query for data that shows who paid an ammount
+--GREATER than $2
+SELECT payment_id, customer_id, amount
+FROM payment
+WHERE amount > 11.00;
+
+-- LESS THAN  or equal 7.99
+SELECT customer_id, amount, payment_id
+FROM payment
+WHERE amount <= 7.99;
+
+-- Query for data showing who paid greater or equal to $2
+-- in Ascending ORDER -- ASC for ascending order DESC for descending order..order default = ASC
+SELECT customer_id, amount
+FROM payment
+WHERE amount >= 2.00
+ORDER BY amount DESC;
+
+-- Query for data showing who paid
+-- an amount BETWEEN $2 and $8
+-- using BETWEEN & AND clauses
+SELECT customer_id, amount
+FROM payment
+WHERE amount BETWEEN 3.00 AND 8.00
+ORDER BY amount;
+
+-- Query for data showing who piad 
+--an amount not equal (<>) to 0.00
+--ORDER BY DESC
+SELECT customer_id, amount
+FROM payment
+WHERE amount <> 3.99
+ORDER BY amount DESC;
+
+--EXPLORE OTHER TABLES, AND COME BACK TO TELL US SOMEHTING ABOUT THEM.
+
+--Question
+--Query
+
+--city, where is each city located by country
+SELECT city, country_id
+FROM city
+ORDER BY country_id;
+
+-- From the staff, i want to know the email for a specific person
+-- Query the staff name and email and sort by WHERE and LIKE and %
+SELECT first_name, last_name, email
+FROM staff;
+
+SELECT public.language.name
+FROM public.language;
+
+-- SQL aggregations => SUM(), AVG(), COUNT(), MIN(), MAX()
+
+-- Query Display the sum of amounts payed that are greater than 5.99
+SELECT SUM(amount)
+FROM payment
+WHERE amount > 5.99;
+
+-- DISPLAY AVG amounts of the same 
+SELECT AVG(amount)
+FROM payment
+WHERE amount > 5.99;
+
+--Display Count amounts of the same
+SELECT COUNT(amount)
+FROM payment
+WHERE amount > 5.99;
+
+--Display DISTINCT Count amounts of the same
+SELECT COUNT(DISTINCT amount)
+FROM payment
+WHERE amount > 5.99;
+
+-- DISPLAY the min amount that is > 7.99 and rename something AS
+SELECT MIN(amount) AS min_num_payments, MAX(amount) AS max_num_amount
+FROM payment
+WHERE amount > 7.99;
+
+--GROUP BY is a great agregate function
+SELECT amount, COUNT(amount) AS amount_amount
+FROM payment
+WHERE amount = 7.99
+GROUP BY amount;
+
+-- how much did each customer pay in total
+SELECT customer_id, SUM(amount) as customer_total
+FROM payment
+GROUP BY customer_id
+ORDER BY customer_total DESC;
+
+-- GROUP by customer_id and amount
+SELECT customer_id, amount
+FROM payment
+GROUP BY amount, customer_id
+ORDER BY customer_id;
+
+--Check out Customer Table
+SELECT * 
+FROM customer;
+
+-- Count the customer with "j' starting emails
+SELECT COUNT(customer_id) AS j_count, email
+FROM customer
+WHERE email LIKE 'j%'
+GROUP BY email
+HAVING COUNT(customer_id) > 0;
